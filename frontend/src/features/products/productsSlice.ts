@@ -9,14 +9,20 @@ export interface Product {
     product_price: number;
 }
 
+export enum LoadingStatus {
+    IDLE,
+    LOADING,
+    FAILED
+}
+
 interface ProductState {
     products: Product[];
-    status: 'idle' | 'loading' | 'failed';
+    status: LoadingStatus;
 }
 
 const initialState: ProductState = {
     products: [] as Product[],
-    status: 'idle',
+    status: LoadingStatus.IDLE,
 }
 
 export const fetchAsync =
@@ -54,15 +60,15 @@ export const productsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchAsync.pending, (state) => {
-                state.status = 'loading'
+                state.status = LoadingStatus.LOADING
             })
             .addCase(fetchAsync.fulfilled,
                 (state: ProductState, action) => {
-                    state.status = 'idle'
+                    state.status = LoadingStatus.IDLE
                     state.products = [...action.payload].sort();
                 })
             .addCase(fetchAsync.rejected, (state) => {
-                state.status = 'failed';
+                state.status = LoadingStatus.FAILED
             })
     }
 })

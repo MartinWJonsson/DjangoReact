@@ -64,10 +64,10 @@ export default function ProductModal(props: { showModal: boolean, toggleModal: a
             }
             else {
                 const product: Product = { product_name: pName, product_description: pDesc, product_price: pPrice }
-                let newProduct = new Promise((resolve, reject) => { resolve(postNewProduct(product)) })
-                newProduct.then((value) =>
-                    dispatch(addProductAction(value))
-                )
+                postNewProduct(product)
+                    .then((responseProduct) =>
+                        dispatch(addProductAction(responseProduct))
+                    )
                 event.preventDefault()
                 handleToggleModal()
                 updateName("")

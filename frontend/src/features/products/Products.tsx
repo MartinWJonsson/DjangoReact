@@ -2,7 +2,7 @@ import styles from './Products.module.css';
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import { fetchAsync } from './productsSlice'
 import { useEffect, useState } from 'react';
-import { Product, deleteProductAction, addProductAction } from './productsSlice'
+import { Product, deleteProductAction, addProductAction, LoadingStatus } from './productsSlice'
 import { postNewProduct, deleteProduct } from './productsAPI'
 import ProductModal from './ProductModal'
 
@@ -13,20 +13,22 @@ export function Products() {
     const dispatch = useAppDispatch();
     const [showModal, toggleModal] = useState(false)
     const [chosenProduct, selectProduct] = useState()
+    const [currentTime, setCurrentTime] = useState(0)
 
     useEffect(() => {
-        if (status === 'idle') {
+        if (status === LoadingStatus.IDLE) {
             dispatch(fetchAsync())
+            setCurrentTime(Date.now() + 2500)
         }
     }, [])
 
     const handleToggleModal = () => {
-        if(showModal){
+        if (showModal) {
             setTimeout(() => {
                 toggleModal(!showModal)
             }, 250);
         }
-        else{
+        else {
             toggleModal(!showModal)
         }
     }
@@ -62,18 +64,24 @@ export function Products() {
             </li>
         )
     }
+    if (status === LoadingStatus.LOADING) {
+        return (
+            <div className={styles.loader}></div>
+        )
+    } else {
 
-    return (
-        <div>
-            <ProductModal showModal={showModal} toggleModal={handleToggleModal} product={chosenProduct}/>
-            <ul className={styles.ul}>
-                {products.map((product, index) => {
-                    if (product !== undefined)
-                        return (
-                            <ShowBadge key={index} product={product} />
-                        )
-                })}
-            </ul>
-        </div>
-    )
+        return (
+            <div>
+                <ProductModal showModal={showModal} toggleModal={handleToggleModal} product={chosenProduct} />
+                <ul className={styles.ul}>
+                    {products.map((product, index) => {
+                        if (product !== undefined)
+                            return (
+                                <ShowBadge key={index} product={product} />
+                            )
+                    })}
+                </ul>
+            </div>
+        )
+    }
 }
