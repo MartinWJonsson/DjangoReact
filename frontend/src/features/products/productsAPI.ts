@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export async function fetchProducts() {
   const result = await (axios.get('http://127.0.0.1:8000/api/products'))
-    .then((response) => {return response.data})
+    .then((response) => { return response.data })
   return result;
 }
 
@@ -13,11 +13,11 @@ export async function postNewProduct(product: Product) {
     product_description: product.product_description,
     product_price: product.product_price,
   }, {
-    auth: {username: 'admin', password: 'password'}
+    auth: { username: 'admin', password: 'password' }
   }))
-    .then((response) => {return response.data})
-    .catch((err) => {console.error(err)})
-    return Promise.resolve(result)
+    .then((response) => { return response.data })
+    .catch((err) => { console.error(err) })
+  return Promise.resolve(result)
 }
 
 export async function updateProduct(product: Product) {
@@ -27,16 +27,16 @@ export async function updateProduct(product: Product) {
     product_description: product.product_description,
     product_price: product.product_price,
   }, {
-    auth: {username: 'admin', password: 'password'}
+    auth: { username: 'admin', password: 'password' }
   }))
-    .then((response) => {return response.data})
-    .catch((err) => {console.error(err)})
-    return Promise.resolve(result)
+    .then((response) => { return response.data })
+    .catch((err) => { console.error(err) })
+  return Promise.resolve(result)
 }
 
 export function deleteProduct(id: number) {
   axios.delete('http://127.0.0.1:8000/api/products/' + id, {
-    auth: {username: 'admin', password: 'password'}
+    auth: { username: 'admin', password: 'password' }
   })
     .then(() => console.log())
     .catch((err) => console.error(err))
