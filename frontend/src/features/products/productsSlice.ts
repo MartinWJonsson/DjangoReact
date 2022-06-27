@@ -65,7 +65,7 @@ export const productsSlice = createSlice({
             .addCase(fetchAsync.fulfilled,
                 (state: ProductState, action) => {
                     state.status = LoadingStatus.IDLE
-                    state.products = [...action.payload].sort();
+                    state.products = [...action.payload].sort((a, b) => a.product_name != b.product_name ? a.product_name > b.product_name ? 1 : -1 : a.id > b.id ? 1 : - 1)
                 })
             .addCase(fetchAsync.rejected, (state) => {
                 state.status = LoadingStatus.FAILED
