@@ -2,9 +2,9 @@ import styles from './Titlebar.module.css'
 import ProductModal from '../products/ProductModal'
 import { useState } from 'react'
 
-export function Titlebar() {
+function Titlebar() {
   const [showModal, toggleModal] = useState(false)
-
+  
   const handleToggleModal = () => {
     if (showModal) {
       setTimeout(() => {
@@ -41,3 +41,5 @@ export function Titlebar() {
     </div>
   )
 }
+
+export default Titlebar

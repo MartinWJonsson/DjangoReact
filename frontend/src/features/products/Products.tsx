@@ -7,7 +7,7 @@ import ProductModal from './ProductModal'
 import ProductBadge from './ProductBadge'
 
 
-export function Products() {
+function Products() {
   const products = useAppSelector(state => state.products.products)
   const status = useAppSelector(state => state.products.status)
   const dispatch = useAppDispatch();
@@ -52,3 +52,5 @@ export function Products() {
     )
   }
 }
+
+export default Products

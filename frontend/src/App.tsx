@@ -1,5 +1,5 @@
-import { Products } from './features/products/Products';
-import { Titlebar } from './features/titlebar/Titlebar'
+import Products from './features/products/Products';
+import Titlebar from './features/titlebar/Titlebar'
 import './App.css';
 
 function App() {

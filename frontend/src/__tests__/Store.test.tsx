@@ -1,10 +1,9 @@
-import { render } from '@testing-library/react';
+import { render } from '@testing-library/react'
 import { Provider } from 'react-redux';
-import { store } from '../../app/store';
-import reducer, { addProductAction, deleteProductAction, updateProductAction, LoadingStatus } from '../products/productsSlice'
-import App from '../../App';
-import ProductModal from '../../features/products/ProductModal'
-
+import { store } from '../app/store';
+import App from '../App';
+import reducer, { addProductAction, deleteProductAction, updateProductAction, LoadingStatus, fetchAsync } from '../features/products/productsSlice'
+import * as mockedSlice from '../features/products/productsSlice'
 
 test('Return the initial state', () => {
   expect(reducer(undefined, { type: undefined })).toEqual(
