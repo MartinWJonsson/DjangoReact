@@ -10,9 +10,6 @@ test.describe("testing the product features", () => {
     // Click text=Add new product
     await page.locator('text=Add new product').click();
 
-    // Click [placeholder="Name"]
-    await page.locator('[placeholder="Name"]').click();
-
     // Fill [placeholder="Name"]
     await page.locator('[placeholder="Name"]').fill('Peach');
 
@@ -37,9 +34,6 @@ test.describe("testing the product features", () => {
 
     // Click text=XPeachPeachy25.99$
     await page.locator('text=XPeachPeachy25.99$').click();
-
-    // Click [placeholder="Name"]
-    await page.locator('[placeholder="Name"]').click();
 
     // Fill [placeholder="Name"]
     await page.locator('[placeholder="Name"]').fill('Peaches');
@@ -69,9 +63,6 @@ test.describe("testing the product features", () => {
     // Click text=Peaches >> nth=0
     await page.locator('text=Peaches').first().click();
 
-    // Click [placeholder="Name"]
-    await page.locator('[placeholder="Name"]').click();
-
     // Fill [placeholder="Name"]
     await page.locator('[placeholder="Name"]').fill('Tomatoes');
 
@@ -88,7 +79,7 @@ test.describe("testing the product features", () => {
     await page.locator('[placeholder="\\30 "]').fill('12.99');
 
     // Click text=Submit
-    await page.locator('text=Submit').click();
+    await page.keyboard.press('Enter');
 
   });
 

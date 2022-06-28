@@ -1,19 +1,10 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
-import reducer, { addProductAction, LoadingStatus } from './features/products/productsSlice'
-import App from './App';
+import { store } from '../../app/store';
+import reducer, { addProductAction, deleteProductAction, updateProductAction, LoadingStatus } from '../products/productsSlice'
+import App from '../../App';
+import ProductModal from '../../features/products/ProductModal'
 
-test('Renders learn react link', () => {
-  const { getByText } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
-
-  expect(getByText(/Tittle/i)).toBeInTheDocument();
-});
 
 test('Return the initial state', () => {
   expect(reducer(undefined, { type: undefined })).toEqual(
@@ -71,6 +62,29 @@ test('Can add product into existing list and sort it', () => {
         product_description: "Lång, för din njutning",
         product_price: 6.29
       },],
+      status: LoadingStatus.IDLE
+    }
+  )
+})
+
+test('Can update a product', () => {
+  const previousState = {
+    products: [{ product_name: "Korv", product_description: "Lång, för din njutning", product_price: 6.29 }],
+    status: LoadingStatus.IDLE
+  }
+  expect(reducer(previousState, updateProductAction({ product_name: "Wiener", product_description: "Red, hot, and only contains 12% bug.", product_price: 1.99 }))).toEqual(
+    {
+      products: [{ product_name: "Wiener", product_description: "Red, hot, and only contains 12% bug.", product_price: 1.99 }],
+      status: LoadingStatus.IDLE
+    }
+  )
+})
+
+test('Can remove product from list', () => {
+  const previousState = { products: [{ id: 0, product_name: "Korv", product_description: "Lång, för din njutning", product_price: 6.29 }], status: LoadingStatus.IDLE }
+  expect(reducer(previousState, deleteProductAction(0))).toEqual(
+    {
+      products: [],
       status: LoadingStatus.IDLE
     }
   )

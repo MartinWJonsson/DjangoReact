@@ -2,9 +2,9 @@ import styles from './Products.module.css';
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import { fetchAsync } from './productsSlice'
 import { useEffect, useState } from 'react';
-import { Product, deleteProductAction, addProductAction, LoadingStatus } from './productsSlice'
-import { postNewProduct, deleteProduct } from './productsAPI'
+import { LoadingStatus } from './productsSlice'
 import ProductModal from './ProductModal'
+import ProductBadge from './ProductBadge'
 
 
 export function Products() {
@@ -13,12 +13,10 @@ export function Products() {
   const dispatch = useAppDispatch();
   const [showModal, toggleModal] = useState(false)
   const [chosenProduct, selectProduct] = useState()
-  const [currentTime, setCurrentTime] = useState(0)
 
   useEffect(() => {
     if (status === LoadingStatus.IDLE) {
       dispatch(fetchAsync())
-      setCurrentTime(Date.now() + 2500)
     }
   }, [])
 
@@ -33,37 +31,6 @@ export function Products() {
     }
   }
 
-  const ShowBadge = (props: any) => {
-    let product = props.product
-
-    const handleUpdateProduct = () => {
-      selectProduct(product)
-      setTimeout(() => {
-        toggleModal(!showModal)
-      }, 50);
-    }
-
-    const handleDeleteProduct = (event: any) => {
-      deleteProduct(product.id)
-      dispatch(deleteProductAction(product.id))
-      event.stopPropagation()
-    }
-
-    return (
-      <li className={styles.li} onClick={() => handleUpdateProduct()}>
-        <button className={styles.removeButton} onClick={(e) => handleDeleteProduct(e)}>X</button>
-        <div className={styles.title}>
-          {product.product_name}
-        </div>
-        <div className={styles.description}>
-          {product.product_description}
-        </div>
-        <div className={styles.price}>
-          {product.product_price.toLocaleString()}$
-        </div>
-      </li>
-    )
-  }
   if (status === LoadingStatus.LOADING) {
     return (
       <div className={styles.loader}></div>
@@ -77,7 +44,7 @@ export function Products() {
           {products.map((product, index) => {
             if (product !== undefined)
               return (
-                <ShowBadge key={index} product={product} />
+                <ProductBadge key={index} product={product} selectProduct={selectProduct} toggleModal={handleToggleModal} showModal={showModal}/>
               )
           })}
         </ul>

@@ -1,15 +1,23 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Products.module.css'
 import { useAppDispatch } from '../../app/hooks'
 import { postNewProduct, updateProduct } from './productsAPI'
 import { Product, addProductAction, updateProductAction } from './productsSlice'
 
-export default function ProductModal(props: { showModal: boolean, toggleModal: any, product?: Product }) {
+export default function ProductModal(props: { showModal: boolean, toggleModal: Function, product?: Product }) {
   const dispatch = useAppDispatch();
   const [pName, updateName] = useState<string>("")
   const [pDesc, updateDescription] = useState<string>("")
   const [pPrice, updatePrice] = useState<number>(0)
   let title = props.product ? "Update product!" : "Create a new product!"
+
+  useEffect(() => {
+    if (props.product !== undefined) {
+      handleNameChange(props.product.product_name)
+      handleDescChange(props.product.product_description)
+      handlePriceChange(props.product.product_price)
+    }
+  }, [props.product])
 
   const handleNameChange = (value: string) => {
     updateName(value)
@@ -26,14 +34,6 @@ export default function ProductModal(props: { showModal: boolean, toggleModal: a
   const handlePriceFocus = (event: any) => {
     event.target.select()
   }
-
-  useEffect(() => {
-    if (props.product !== undefined) {
-      handleNameChange(props.product.product_name)
-      handleDescChange(props.product.product_description)
-      handlePriceChange(props.product.product_price)
-    }
-  }, [props.product])
 
   const handleToggleModal = () => {
     let modal = window.document.querySelector('#modal')
@@ -87,7 +87,7 @@ export default function ProductModal(props: { showModal: boolean, toggleModal: a
           <form onSubmit={(e) => submitProductForm(e)}>
             <div className={styles.formCell}>
               <label>Product name</label>
-              <input type="text" id="pname" className={styles.inputTextField} value={pName} onChange={(e) => handleNameChange(e.target.value)} placeholder="Name" />
+              <input type="text" id="pname" className={styles.inputTextField} value={pName} onChange={(e) => handleNameChange(e.target.value)} placeholder="Name" autoFocus onFocus={(e) => e.target.select()}/>
             </div>
             <div className={styles.formCell}>
               <label>Description</label>
@@ -95,7 +95,7 @@ export default function ProductModal(props: { showModal: boolean, toggleModal: a
             </div>
             <div className={styles.formCell}>
               <label>Price</label>
-              <input type="number" id="pname" className={styles.inputTextField} value={pPrice} onFocus={(e) => handlePriceFocus(e)} onChange={(e) => handlePriceChange(e.target.value !== "" ? parseFloat(e.target.value) : 0)} placeholder="0" />
+              <input type="number" id="pname" className={styles.inputTextField} value={pPrice} onFocus={(e) => handlePriceFocus(e)} onChange={(e) => handlePriceChange(e.target.value !== "" ? parseFloat(e.target.value) : 0)} placeholder="0" step="any"/>
             </div>
             <input type="submit" value="Submit" className={styles.submit} />
           </form>
