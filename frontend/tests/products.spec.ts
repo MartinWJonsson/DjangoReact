@@ -6,6 +6,7 @@ test.describe("testing the product features", () => {
   })
 
   test('test creating a new Product', async ({ page }) => {
+    await expect(page.locator('text=XPeachPeachy25.99$')).toHaveCount(0);
 
     // Click text=Add new product
     await page.locator('text=Add new product').click();
@@ -28,9 +29,12 @@ test.describe("testing the product features", () => {
     // Click text=Submit
     await page.locator('text=Submit').click();
 
+    await expect(page.locator('text=XPeachPeachy25.99$')).toHaveCount(1);
   });
 
   test('test updating a product by clicking', async ({ page }) => {
+    await expect(page.locator('text=XPeachPeachy25.99$')).toHaveCount(1);
+    await expect(page.locator('text=XPeachesSeveral Peaches32.01$')).toHaveCount(0);
 
     // Click text=XPeachPeachy25.99$
     await page.locator('text=XPeachPeachy25.99$').click();
@@ -56,9 +60,13 @@ test.describe("testing the product features", () => {
     // Click text=Submit
     await page.locator('text=Submit').click();
 
+    await expect(page.locator('text=XPeachPeachy25.99$')).toHaveCount(0);
+    await expect(page.locator('text=XPeachesSeveral Peaches32.01$')).toHaveCount(1);
   });
 
   test('test updating a product with keyboard', async ({ page }) => {
+    await expect(page.locator('text=XPeachesSeveral Peaches32.01$')).toHaveCount(1);
+    await expect(page.locator('text=XTomatoesRed and in charge12.99$')).toHaveCount(0);
 
     // Click text=Peaches >> nth=0
     await page.locator('text=Peaches').first().click();
@@ -81,12 +89,14 @@ test.describe("testing the product features", () => {
     // Click text=Submit
     await page.keyboard.press('Enter');
 
+    await expect(page.locator('text=Peaches')).toHaveCount(0);
+    await expect(page.locator('text=Tomatoes')).toHaveCount(1);
   });
 
   test('test deleting a product', async ({ page }) => {
-
     // Click text=XTomatoesRed and in charge12.99$ >> button
+    await expect(page.locator('text=XTomatoesRed and in charge12.99$')).toHaveCount(1);
     await page.locator('text=XTomatoesRed and in charge12.99$ >> button').click();
-
+    await expect(page.locator('text=XTomatoesRed and in charge12.99$')).toHaveCount(0);
   });
 })

@@ -16,7 +16,7 @@ export async function postNewProduct(product: Product) {
     auth: { username: 'admin', password: 'password' }
   }))
     .then((response) => { return response.data })
-    .catch((err) => { console.error(err) })
+    .catch((err) => { return err })
   return Promise.resolve(result)
 }
 
@@ -30,14 +30,14 @@ export async function updateProduct(product: Product) {
     auth: { username: 'admin', password: 'password' }
   }))
     .then((response) => { return response.data })
-    .catch((err) => { console.error(err) })
+    .catch((err) => { return err })
   return Promise.resolve(result)
 }
 
-export function deleteProduct(id: number) {
-  axios.delete('http://127.0.0.1:8000/api/products/' + id, {
+export async function deleteProduct(id: number) {
+  await axios.delete('http://127.0.0.1:8000/api/products/' + id, {
     auth: { username: 'admin', password: 'password' }
   })
-    .then(() => console.log())
-    .catch((err) => console.error(err))
+    .then((response) => { return response.data })
+    .catch((err) => { return err })
 }

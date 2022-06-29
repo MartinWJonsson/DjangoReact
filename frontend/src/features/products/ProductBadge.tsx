@@ -1,29 +1,16 @@
 import styles from './Products.module.css';
 import React from 'react'
 import { deleteProduct } from './productsAPI'
-import { deleteProductAction, Product } from './productsSlice'
+import { deleteProductAction, Product, handleUpdateProduct } from './productsSlice'
 import { useAppDispatch } from '../../app/hooks'
 
-const ProductBadge = (props: {product: Product, selectProduct: Function, toggleModal: Function, showModal: Boolean}) => {
+const ProductBadge = (props: {product: Product, selectProduct: Function, handleToggleModal: Function, showModal: Boolean, toggleModal: Function, handleDelete: Function}) => {
   const dispatch = useAppDispatch();
   const product: Product = props.product
 
-  const handleUpdateProduct = () => {
-    props.selectProduct(product)
-    setTimeout(() => {
-      props.toggleModal(!props.showModal)
-    }, 50);
-  }
-
-  const handleDeleteProduct = (event: React.SyntheticEvent) => {
-    deleteProduct(product.id as number)
-    dispatch(deleteProductAction(product.id))
-    event.stopPropagation()
-  }
-
   return (
-    <li className={styles.li} onClick={() => handleUpdateProduct()}>
-      <button className={styles.removeButton} onClick={(e) => handleDeleteProduct(e)}>X</button>
+    <li className={styles.li} onClick={() => handleUpdateProduct(product, props.selectProduct, props.toggleModal)} data-testid="product-badge-click">
+      <button className={styles.removeButton} onClick={(e) => props.handleDelete(e, product.id as number, dispatch)} data-testid="product-badge-remove">X</button>
       <div className={styles.title}>
         {product.product_name}
       </div>

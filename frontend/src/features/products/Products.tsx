@@ -1,13 +1,11 @@
 import styles from './Products.module.css';
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
-import { fetchAsync } from './productsSlice'
 import { useEffect, useState } from 'react';
-import { LoadingStatus } from './productsSlice'
+import { fetchAsync, LoadingStatus, handleDeleteProduct } from './productsSlice'
 import ProductModal from './ProductModal'
 import ProductBadge from './ProductBadge'
 
-
-function Products() {
+function Products(props: {handleToggleModal: Function}) {
   const products = useAppSelector(state => state.products.products)
   const status = useAppSelector(state => state.products.status)
   const dispatch = useAppDispatch();
@@ -20,17 +18,6 @@ function Products() {
     }
   }, [])
 
-  const handleToggleModal = () => {
-    if (showModal) {
-      setTimeout(() => {
-        toggleModal(!showModal)
-      }, 250);
-    }
-    else {
-      toggleModal(!showModal)
-    }
-  }
-
   if (status === LoadingStatus.LOADING) {
     return (
       <div className={styles.loader}></div>
@@ -39,12 +26,12 @@ function Products() {
 
     return (
       <div>
-        <ProductModal showModal={showModal} toggleModal={handleToggleModal} product={chosenProduct} />
+        <ProductModal showModal={showModal} toggleModal={toggleModal} handleToggleModal={props.handleToggleModal} product={chosenProduct} />
         <ul className={styles.ul}>
           {products.map((product, index) => {
             if (product !== undefined)
               return (
-                <ProductBadge key={index} product={product} selectProduct={selectProduct} toggleModal={handleToggleModal} showModal={showModal}/>
+                <ProductBadge key={index} product={product} selectProduct={selectProduct} handleToggleModal={props.handleToggleModal} showModal={showModal} toggleModal={toggleModal} handleDelete={handleDeleteProduct} />
               )
           })}
         </ul>

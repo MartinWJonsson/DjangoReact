@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { fetchProducts } from './productsAPI';
+import { fetchProducts, deleteProduct } from './productsAPI';
 
 export interface Product {
   id?: number;
@@ -41,6 +41,19 @@ const updateProduct = (products: Product[], product: Product) => {
     }
   })
   return products;
+}
+
+export const handleUpdateProduct = (product : Product, selectProduct : Function, toggleModal : Function) => {
+  selectProduct(product)
+  setTimeout(() => {
+    toggleModal(true)
+  }, 50);
+}
+
+export const handleDeleteProduct = (event: React.SyntheticEvent, id : number, dispatch : any) => {
+  deleteProduct(id)
+  dispatch(deleteProductAction(id))
+  event.stopPropagation()
 }
 
 export const productsSlice = createSlice({
