@@ -90,7 +90,7 @@ export default function ProductModal(props: { showModal: boolean, toggleModal: F
           <form onSubmit={(e) => submitProductForm(e, {product_name: pName, product_description: pDesc, product_price: pPrice})}>
             <div className={styles.formCell}>
               <label>Product name</label>
-              <input type="text" id="pname" className={styles.inputTextField} value={pName} onChange={(e) => handleNameChange(e.target.value)} placeholder="Name" autoFocus onFocus={(e) => e.target.select()}/>
+              <input type="text" id="pname" className={styles.inputTextField} value={pName} onChange={(e) => handleNameChange(e.target.value)} placeholder="Name" autoFocus onFocus={(e) => e.target.select()} data-testid="form-name-field"/>
             </div>
             <div className={styles.formCell}>
               <label>Description</label>

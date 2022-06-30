@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">86.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>13/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>4/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">84.61% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>11/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -113,25 +113,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -154,26 +154,26 @@ import { fetchAsync, LoadingStatus, handleDeleteProduct } from './productsSlice'
 import ProductModal from './ProductModal'
 import ProductBadge from './ProductBadge'
 &nbsp;
-function <span class="fstat-no" title="function not covered" >Products(</span>props: {handleToggleModal: Function}) {
-  const products = <span class="cstat-no" title="statement not covered" >useAppSelector(<span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.products.products)</span></span>
-  const status = <span class="cstat-no" title="statement not covered" >useAppSelector(<span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.products.status)</span></span>
-  const dispatch = <span class="cstat-no" title="statement not covered" >useAppDispatch();</span>
-  const [showModal, toggleModal] = <span class="cstat-no" title="statement not covered" >useState(false)</span>
-  const [chosenProduct, selectProduct] = <span class="cstat-no" title="statement not covered" >useState()</span>
+function Products(props: {handleToggleModal: Function}) {
+  const products = useAppSelector(state =&gt; state.products.products)
+  const status = useAppSelector(state =&gt; state.products.status)
+  const dispatch = useAppDispatch();
+  const [showModal, toggleModal] = useState(false)
+  const [chosenProduct, selectProduct] = useState()
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (status === LoadingStatus.IDLE) {</span>
-<span class="cstat-no" title="statement not covered" >      dispatch(fetchAsync())</span>
+  useEffect(() =&gt; {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (status === LoadingStatus.IDLE) {
+      dispatch(fetchAsync())
     }
   }, [])
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (status === LoadingStatus.LOADING) {</span>
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  if (status === LoadingStatus.LOADING) {
+    return (
       &lt;div className={styles.loader}&gt;&lt;/div&gt;
     )
   } else {
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
       &lt;div&gt;
         &lt;ProductModal showModal={showModal} toggleModal={toggleModal} handleToggleModal={props.handleToggleModal} product={chosenProduct} /&gt;
         &lt;ul className={styles.ul}&gt;
@@ -196,7 +196,7 @@ export default Products</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu Jun 30 2022 01:32:47 GMT+0200 (Central European Summer Time)
+                at Thu Jun 30 2022 19:30:28 GMT+0200 (Central European Summer Time)
             </div>
         <script src="../../../prettify.js"></script>
         <script>

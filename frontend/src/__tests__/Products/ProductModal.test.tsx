@@ -1,7 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from '../app/store';
-import ProductModal from '../features/products/ProductModal'
+import { store } from '../../app/store';
+import ProductModal from '../../features/products/ProductModal'
+
 
 describe('Product Modal', () => {
   test('Modal does render', () => {
@@ -73,7 +74,6 @@ describe('Product Modal', () => {
   test('submit form no product', async () => {
     const toggleSpy = jest.fn()
     const handleToggleSpy = jest.fn()
-    global.alert = jest.fn()
 
     render(
       <Provider store={store}>
@@ -81,8 +81,7 @@ describe('Product Modal', () => {
       </Provider>
     )
 
-    fireEvent.click(screen.getByTestId('submit-button'))
-    expect(window.alert).toBeCalled
-    expect(toggleSpy).not.toHaveBeenCalled()
+    fireEvent.click(screen.getByTestId('form-name-field'))
+    expect(document.activeElement).toEqual(screen.getByTestId('form-name-field'))
   })
 })

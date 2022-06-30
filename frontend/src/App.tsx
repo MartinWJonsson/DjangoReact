@@ -17,7 +17,7 @@ export const handleToggleModal = (showModal: boolean, toggleModal: Function) => 
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" data-testid="app-container">
       <Titlebar handleToggleModal={handleToggleModal} />
       <Products handleToggleModal={handleToggleModal} />
     </div>

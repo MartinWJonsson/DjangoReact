@@ -12,4 +12,17 @@ describe('App', () => {
 
     expect(mockToggle).toHaveBeenCalled()
   })
+
+  test('app has rendered', () => {
+    jest.mock('../features/products/Products')
+    jest.mock('../features/titlebar/Titlebar')
+
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    )
+
+    expect(getByTestId('app-container').childNodes.length).toEqual(2)
+  })
 })
