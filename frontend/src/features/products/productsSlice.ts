@@ -1,5 +1,4 @@
-import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchProducts, deleteProduct } from './productsAPI';
 
 export interface Product {
@@ -35,22 +34,16 @@ export const fetchAsync =
   )
 
 const updateProduct = (products: Product[], product: Product) => {
-  products.forEach((prod, index) => {
-    if (current(prod).id === product.id) {
-      products[index] = product;
-    }
-  })
-  return products;
+  const result = products.map(prod => prod.id === product.id ? product : prod)
+  return result;
 }
 
-export const handleUpdateProduct = (product : Product, selectProduct : Function, toggleModal : Function) => {
+export const handleUpdateProduct = (product: Product, selectProduct: Function, toggleModal: Function) => {
   selectProduct(product)
-  setTimeout(() => {
-    toggleModal(true)
-  }, 50);
+  toggleModal(true)
 }
 
-export const handleDeleteProduct = (event: React.SyntheticEvent, id : number, dispatch : any) => {
+export const handleDeleteProduct = (event: React.SyntheticEvent, id: number, dispatch: any) => {
   deleteProduct(id)
   dispatch(deleteProductAction(id))
   event.stopPropagation()
@@ -64,7 +57,7 @@ export const productsSlice = createSlice({
       state.products = state.products.filter(product => product.id !== action.payload)
     },
     addProductAction: (state, action) => {
-      state.products = [...state.products, action.payload].sort((a, b) => a.product_name != b.product_name ? a.product_name > b.product_name ? 1 : -1 : a.id > b.id ? 1 : - 1)
+      state.products = [...state.products, action.payload].sort((a, b) => a.product_name !== b.product_name ? a.product_name > b.product_name ? 1 : -1 : a.id > b.id ? 1 : - 1)
     },
     updateProductAction: (state, action) => {
       state.products = updateProduct([...state.products], action.payload)
@@ -78,15 +71,13 @@ export const productsSlice = createSlice({
       .addCase(fetchAsync.fulfilled,
         (state: ProductState, action) => {
           state.status = LoadingStatus.IDLE
-          state.products = [...action.payload].sort((a, b) => a.product_name != b.product_name ? a.product_name > b.product_name ? 1 : -1 : a.id > b.id ? 1 : - 1)
+          state.products = [...action.payload].sort((a, b) => a.product_name !== b.product_name ? a.product_name > b.product_name ? 1 : -1 : a.id > b.id ? 1 : - 1)
         })
       .addCase(fetchAsync.rejected, (state) => {
         state.status = LoadingStatus.FAILED
       })
   }
 })
-
-export const selectProducts = (state: RootState) => state.products;
 
 export const { deleteProductAction, addProductAction, updateProductAction } = productsSlice.actions
 

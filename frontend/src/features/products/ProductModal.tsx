@@ -38,20 +38,19 @@ export default function ProductModal(props: { showModal: boolean, toggleModal: F
   const handleToggleModal = () => {
     let modal = window.document.querySelector('.modal')
     if (modal !== null) modal.classList.toggle("hidden")
-    if (props.product === undefined)
-      setTimeout(() => {
+    if (props.product === undefined) {
         updateName("")
         updateDescription("")
         updatePrice(0)
-      }, 250);
+    }
     props.handleToggleModal(props.showModal, props.toggleModal)
   }
 
-  const submitProductForm = (event: React.SyntheticEvent, newProduct: {id?: number, product_name: string, product_description: string, product_price: number}) => {
-    if (pName.length < 5 || pDesc.length < 5 || pPrice < .1) {
+  const submitProductForm = (event: React.SyntheticEvent, newProduct: { id?: number, product_name: string, product_description: string, product_price: number }) => {
+    if (pName.length <= 3 || pDesc.length <= 5 || pPrice <= .1) {
       alert("Please enter all of the fields correctly")
       event.preventDefault()
-      return("Failed to submit")
+      return ("Failed to submit")
     } else {
       if (props.product !== undefined) {
         const product: Product = { id: props.product.id, product_name: pName, product_description: pDesc, product_price: pPrice }
@@ -87,20 +86,20 @@ export default function ProductModal(props: { showModal: boolean, toggleModal: F
           <div className={styles.title}>
             {title}
           </div>
-          <form onSubmit={(e) => submitProductForm(e, {product_name: pName, product_description: pDesc, product_price: pPrice})}>
+          <form onSubmit={(e) => submitProductForm(e, { product_name: pName, product_description: pDesc, product_price: pPrice })}>
             <div className={styles.formCell}>
               <label>Product name</label>
-              <input type="text" id="pname" className={styles.inputTextField} value={pName} onChange={(e) => handleNameChange(e.target.value)} placeholder="Name" autoFocus onFocus={(e) => e.target.select()} data-testid="form-name-field"/>
+              <input type="text" id="pname" className={styles.inputTextField} value={pName} onChange={(e) => handleNameChange(e.target.value)} placeholder="Name" autoFocus onFocus={(e) => e.target.select()} data-testid="form-name-field" />
             </div>
             <div className={styles.formCell}>
               <label>Description</label>
-              <input type="text" id="pname" className={styles.inputTextField} value={pDesc} onChange={(e) => handleDescChange(e.target.value)} placeholder="Description" />
+              <input type="text" id="pname" className={styles.inputTextField} value={pDesc} onChange={(e) => handleDescChange(e.target.value)} placeholder="Description" data-testid="form-desc-field" />
             </div>
             <div className={styles.formCell}>
               <label>Price</label>
-              <input type="number" id="pname" className={styles.inputTextField} value={pPrice} onFocus={(e) => handlePriceFocus(e)} onChange={(e) => handlePriceChange(e.target.value !== "" ? parseFloat(e.target.value) : 0)} placeholder="0" step="any"/>
+              <input type="number" id="pname" className={styles.inputTextField} value={pPrice} onFocus={(e) => handlePriceFocus(e)} onChange={(e) => handlePriceChange(e.target.value !== "" ? parseFloat(e.target.value) : 0)} placeholder="0" step="any" data-testid="form-price-field" />
             </div>
-            <input type="submit" value="Submit" className={styles.submit} data-testid="submit-button"/>
+            <input type="submit" value="Submit" className={styles.submit} data-testid="submit-button" />
           </form>
         </div>
       </div>

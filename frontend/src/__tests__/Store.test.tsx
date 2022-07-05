@@ -1,4 +1,4 @@
-import reducer, { addProductAction, deleteProductAction, updateProductAction, LoadingStatus, fetchAsync } from '../features/products/productsSlice'
+import reducer, { addProductAction, deleteProductAction, updateProductAction, LoadingStatus } from '../features/products/productsSlice'
 
 test('Return the initial state', () => {
   expect(reducer(undefined, { type: undefined })).toEqual(
@@ -19,38 +19,37 @@ test('Can add product into empy list', () => {
   )
 })
 
-test('Can add product into existing list and check unsorted', () => {
-  const previousState = {
-    products: [{ product_name: "Korv", product_description: "Lång, för din njutning", product_price: 6.29 }],
-    status: LoadingStatus.IDLE
-  }
-  expect(reducer(previousState, addProductAction({ product_name: "Chewing gum", product_description: "Now comes in PRE-CHEWED™", product_price: 1.12 }))).not.toEqual(
-    {
-      products: [{
-        product_name: "Korv",
-        product_description: "Lång, för din njutning",
-        product_price: 6.29
-      }, {
-        product_name: "Chewing gum",
-        product_description: "Now comes in PRE-CHEWED™",
-        product_price: 1.12
-      },],
-      status: LoadingStatus.IDLE
-    }
-  )
-})
-
 test('Can add product into existing list and sort it', () => {
   const previousState = {
-    products: [{ product_name: "Korv", product_description: "Lång, för din njutning", product_price: 6.29 }],
+    products: [
+      { product_name: "Korv", product_description: "Lång, för din njutning", product_price: 6.29 },
+      { product_name: "Apple", product_description: "Like the company", product_price: 1.29 },
+      { id: 0, product_name: "Chewing gum", product_description: "Minty fresh! You don't have to worry about brushing your teeth anymore!", product_price: 1.29 },
+      { id: 2, product_name: "Chewing gum", product_description: "Tastes like a real Orange", product_price: 1.13 }
+    ],
     status: LoadingStatus.IDLE
   }
-  expect(reducer(previousState, addProductAction({ product_name: "Chewing gum", product_description: "Now comes in PRE-CHEWED™", product_price: 1.12 }))).toEqual(
+  expect(reducer(previousState, addProductAction({ id: 1, product_name: "Chewing gum", product_description: "Now comes in PRE-CHEWED™", product_price: 1.12 }))).toEqual(
     {
       products: [{
+        product_name: "Apple",
+        product_description: "Like the company",
+        product_price: 1.29
+      }, {
+        id: 0,
+        product_name: "Chewing gum",
+        product_description: "Minty fresh! You don't have to worry about brushing your teeth anymore!",
+        product_price: 1.29
+      }, {
+        id: 1,
         product_name: "Chewing gum",
         product_description: "Now comes in PRE-CHEWED™",
         product_price: 1.12
+      }, {
+        id: 2,
+        product_name: "Chewing gum",
+        product_description: "Tastes like a real Orange",
+        product_price: 1.13
       }, {
         product_name: "Korv",
         product_description: "Lång, för din njutning",

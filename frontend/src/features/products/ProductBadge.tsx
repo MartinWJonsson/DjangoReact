@@ -1,7 +1,5 @@
 import styles from './Products.module.css';
-import React from 'react'
-import { deleteProduct } from './productsAPI'
-import { deleteProductAction, Product, handleUpdateProduct } from './productsSlice'
+import { Product, handleUpdateProduct } from './productsSlice'
 import { useAppDispatch } from '../../app/hooks'
 
 const ProductBadge = (props: {product: Product, selectProduct: Function, handleToggleModal: Function, showModal: Boolean, toggleModal: Function, handleDelete: Function}) => {

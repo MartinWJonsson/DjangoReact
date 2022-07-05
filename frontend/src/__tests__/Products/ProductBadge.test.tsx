@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../../app/store';
 import * as Slice from '../../features/products/productsSlice'
@@ -29,11 +29,12 @@ describe('Product Badge', () => {
   });
 
   describe('Functions', () => {
-    test('clicking on badge', () => {
+    test('clicking on badge', async () => {
       const selectProductSpy = jest.fn()
       const toggleModalSpy = jest.fn()
       const handleToggleModalSpy = jest.fn()
       const removeProductSpy = jest.fn()
+      const sliceSpy = jest.spyOn(Slice, "handleUpdateProduct")
 
       const product: Slice.Product = { product_name: 'foo', product_description: 'bar', product_price: 100 }
 
@@ -42,12 +43,12 @@ describe('Product Badge', () => {
           <ProductBadge product={product} selectProduct={selectProductSpy} toggleModal={toggleModalSpy} handleToggleModal={handleToggleModalSpy} showModal={false} handleDelete={removeProductSpy} />
         </Provider>
       );
-
+      
       fireEvent.click(getByTestId('product-badge-click'))
-      expect(selectProductSpy).toHaveBeenCalled()
-      setTimeout(() => {
-        expect(toggleModalSpy).toHaveBeenCalled()
-      }, 60)
+      await expect(selectProductSpy).toHaveBeenCalled()
+      await expect(sliceSpy).toHaveBeenCalled()
+
+      await waitFor(() => expect(toggleModalSpy).toBeCalled())
     });
 
     test('clicking remove product', () => {

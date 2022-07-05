@@ -4,9 +4,7 @@ import './App.css';
 
 export const handleToggleModal = (showModal: boolean, toggleModal: Function) => {
   if (showModal) {
-    setTimeout(() => {
-      toggleModal(false)
-    }, 250);
+    toggleModal(false)
     return false
   }
   else {

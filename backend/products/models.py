@@ -22,3 +22,9 @@ class Product(models.Model):
     
     def price_is_valid(self):
         return self.product_price >= 0.1
+
+    def name_is_valid(self):
+        return len(self.product_name) >= 3
+
+    def description_is_valid(self):
+        return len(self.product_description) >= 5
