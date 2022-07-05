@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, act } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { resolve } from 'path';
 import { Provider } from 'react-redux';
 import { store } from '../../app/store';
